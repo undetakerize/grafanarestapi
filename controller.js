@@ -53,3 +53,23 @@ exports.addData = function (req, res) {
     }
   );
 };
+
+//update data by id
+exports.updateData = function (req, res) {
+  var noinduk = req.body.noinduk;
+  var nama = req.body.nama;
+  var alamat = req.body.alamat;
+  var hobi = req.body.hobi;
+
+  pool.query(
+    "UPDATE tb_siswa SET nama=$1 , alamat=$2 , hobi=$3",
+    [nama, alamat, hobi],
+    function (error, rows, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        response.ok("data update", res);
+      }
+    }
+  );
+};
