@@ -56,14 +56,15 @@ exports.addData = function (req, res) {
 
 //update data by id
 exports.updateData = function (req, res) {
-  var noinduk = req.body.noinduk;
+  let id = req.params.id;
+  //  var noinduk = req.body.noinduk;
   var nama = req.body.nama;
   var alamat = req.body.alamat;
   var hobi = req.body.hobi;
 
   pool.query(
-    "UPDATE tb_siswa SET nama=$1 , alamat=$2 , hobi=$3",
-    [nama, alamat, hobi],
+    "UPDATE tb_siswa SET nama=$1 , alamat=$2 , hobi=$3 WHERE noinduk=$4",
+    [nama, alamat, hobi, id],
     function (error, rows, fields) {
       if (error) {
         console.log(error);

@@ -11,5 +11,5 @@ module.exports = function (app) {
 
   app.route("/tambah").post(jsonku.addData);
 
-  app.route("/update").put(jsonku.updateData);
+  app.route("/update/:id").put(jsonku.updateData);
 };
