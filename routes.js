@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function (app) {
-  var json = require("./controller");
+  var jsonku = require("./controller");
 
-  app.routes("/").get(json.index);
+  app.route("/").get(jsonku.index);
 };
