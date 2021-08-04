@@ -12,4 +12,6 @@ module.exports = function (app) {
   app.route("/tambah").post(jsonku.addData);
 
   app.route("/update/:id").put(jsonku.updateData);
+
+  app.route("/webhook").post(jsonku.webhook);
 };

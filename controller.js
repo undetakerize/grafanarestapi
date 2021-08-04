@@ -74,3 +74,26 @@ exports.updateData = function (req, res) {
     }
   );
 };
+
+exports.webhook = function (req, res) {
+  // var body = req.body;
+
+  var x = JSON.stringify(req.body.dashboardId);
+  var title = JSON.stringify(req.body.title);
+  var message = JSON.stringify(req.body.message);
+  var evalMatches = JSON.stringify(req.body.evalMatches[0]["value"]);
+  //var evalMatchesv = evalMatches.values;
+  // var dashboardId = x.dashboardId;
+  //var noinduk = req.body.dashboardID;
+  pool.query(
+    "INSERT INTO tb_siswa (noinduk,nama,alamat,hobi) VALUES($1,$2,$3,$4)",
+    [x, title, message, evalMatches],
+    function (error, rows, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        response.ok("data webhook added!", res);
+      }
+    }
+  );
+};
