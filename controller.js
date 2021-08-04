@@ -33,3 +33,23 @@ exports.tampilById = function (req, res) {
     }
   );
 };
+
+//add data ex
+exports.addData = function (req, res) {
+  var noinduk = req.body.noinduk;
+  var nama = req.body.nama;
+  var alamat = req.body.alamat;
+  var hobi = req.body.hobi;
+
+  pool.query(
+    "INSERT INTO tb_siswa (noinduk,nama,alamat,hobi) VALUES($1,$2,$3,$4)",
+    [noinduk, nama, alamat, hobi],
+    function (error, rows, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        response.ok("data added!", res);
+      }
+    }
+  );
+};
