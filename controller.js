@@ -22,9 +22,9 @@ exports.tampilData = function (req, res) {
 exports.tampilById = function (req, res) {
   let id = req.params.id;
   pool.query(
-    "SELECT *FROM tb_siswa WHERE noinduk= ? ",
+    "SELECT * FROM tb_siswa WHERE noinduk = $1",
     [id],
-    function (error, rows, fields) {
+    function (error, rows) {
       if (error) {
         console.log(error);
       } else {
