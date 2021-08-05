@@ -5,7 +5,7 @@ const Pool = require("pg").Pool;
 const pool = new Pool({
   user: "postgres",
   host: "localhost", //localhost
-  database: "db_siswa",
+  database: "db_grafana",
   password: "12345",
 });
 
