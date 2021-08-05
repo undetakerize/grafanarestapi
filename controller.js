@@ -2,6 +2,7 @@
 
 var response = require("./res");
 var pool = require("./koneksi");
+const { default: axios } = require("axios");
 
 exports.index = function (req, res) {
   response.ok("rest api running", res);
@@ -75,7 +76,7 @@ exports.updateData = function (req, res) {
   );
 };
 
-exports.webhook = function (req, res) {
+/*exports.webhook = function (req, res) {
   // var body = req.body;
   //var evalMatchesv = evalMatches.values;
   // var dashboardId = x.dashboardId;
@@ -99,4 +100,49 @@ exports.webhook = function (req, res) {
       }
     }
   );
+};
+*/
+
+exports.webhook = function (req, res) {
+  // var body = req.body;
+  //var evalMatchesv = evalMatches.values;
+  // var dashboardId = x.dashboardId;
+  //var noinduk = req.body.dashboardID;
+  //var x = JSON.stringify(req.body.dashboardId);
+  var dashboardId = JSON.stringify(req.body.dashboardId);
+  var message = JSON.stringify(req.body.message);
+  var ruleName = JSON.stringify(req.body.ruleName);
+  var state = JSON.stringify(req.body.state);
+  var title = JSON.parse(JSON.stringify(req.body.title));
+  var evalMatches = JSON.stringify(req.body.evalMatches[0]["value"]);
+
+  let axiosConfig = {
+    headers: {
+      "Content-Type": "application/json",
+      "LICENSE-API-KEY": "p3rb@r1nd0",
+    },
+  };
+
+  axios
+    .post(
+      "http://wapi.dak.web.id/api/whatsapp/send_message",
+      {
+        message: "siang all",
+        to: "6281321474678",
+      },
+      axiosConfig,
+      function (error, rows, fields) {
+        if (error) {
+          console.log(error);
+        } else {
+          response.ok("ss abbb", res);
+        }
+      }
+    )
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 };
