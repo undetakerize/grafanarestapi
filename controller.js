@@ -130,16 +130,17 @@ exports.webhook = function (req, res) {
         message: "siang all",
         to: "6281321474678",
       },
-      axiosConfig,
-      function (error, rows, fields) {
+      axiosConfig
+      /*  function (error, rows, fields) {
         if (error) {
           console.log(error);
         } else {
           response.ok("ss abbb", res);
         }
-      }
+      }*/
     )
     .then((res) => {
+      console.log(`statusCode: ${res.status(200)}`);
       console.log(res);
     })
     .catch((error) => {
