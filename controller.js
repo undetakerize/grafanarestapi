@@ -96,6 +96,7 @@ exports.updateData = function (req, res) {
       if (error) {
         console.log(error);
       } else {
+        console.log(res);
         response.ok("data webhook added!", res);
       }
     }
@@ -110,11 +111,16 @@ exports.webhook = function (req, res) {
   //var noinduk = req.body.dashboardID;
   //var x = JSON.stringify(req.body.dashboardId);
   var dashboardId = JSON.stringify(req.body.dashboardId);
-  var message = JSON.stringify(req.body.message);
+  var message = JSON.parse(JSON.stringify(req.body.message));
   var ruleName = JSON.stringify(req.body.ruleName);
-  var state = JSON.stringify(req.body.state);
+  var state = JSON.parse(JSON.stringify(req.body.state));
   var title = JSON.parse(JSON.stringify(req.body.title));
   var evalMatches = JSON.stringify(req.body.evalMatches[0]["value"]);
+
+  var postData = {
+    message: title + "\r\n" + message + "\r\n" + state,
+    to: "6281321474678",
+  };
 
   let axiosConfig = {
     headers: {
@@ -126,24 +132,51 @@ exports.webhook = function (req, res) {
   axios
     .post(
       "http://wapi.dak.web.id/api/whatsapp/send_message",
-      {
-        message: "siang all",
-        to: "6281321474678",
-      },
+      postData,
       axiosConfig
-      /*  function (error, rows, fields) {
-        if (error) {
-          console.log(error);
-        } else {
-          response.ok("ss abbb", res);
-        }
-      }*/
     )
     .then((res) => {
-      console.log(`statusCode: ${res.status(200)}`);
+      console.log(`statusCode: ${res.status}`);
       console.log(res);
     })
     .catch((error) => {
       console.error(error);
     });
 };
+
+/*
+exports.webhook = function (req, res) {
+  // var body = req.body;
+  //var evalMatchesv = evalMatches.values;
+  // var dashboardId = x.dashboardId;
+  //var noinduk = req.body.dashboardID;
+  //var x = JSON.stringify(req.body.dashboardId);
+  var dashboardId = JSON.stringify(req.body.dashboardId);
+  var message = JSON.stringify(req.body.message);
+  var ruleName = JSON.stringify(req.body.ruleName);
+  var state = JSON.parse(JSON.stringify(req.body.state));
+  var title = JSON.parse(JSON.stringify(req.body.title));
+  var evalMatches = JSON.stringify(req.body.evalMatches[0]["value"]);
+
+  axios({
+    method: "post",
+    url: "http://wapi.dak.web.id/api/whatsapp/send_message",
+    data: {
+      message: "hi all",
+      to: "6281321474678",
+    },
+    headers: {
+      "Content-type": "application/json",
+      "LICENSE-API-KEY": "p3rb@r1nd0",
+    },
+  })
+    .then((res) => {
+      //  console.log(`statusCode: ${res.status}`);
+      res.sendStatus(200);
+      // response.ok("ok!", res);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+};
+*/
