@@ -9,7 +9,7 @@ exports.index = function (req, res) {
 
 //get data
 exports.tampilData = function (req, res) {
-  pool.query("SELECT *FROM tb_siswa", function (error, rows, fields) {
+  pool.query("SELECT *FROM tb_grafana_alert", function (error, rows, fields) {
     if (error) {
       console.log(error);
     } else {
@@ -22,7 +22,7 @@ exports.tampilData = function (req, res) {
 exports.tampilById = function (req, res) {
   let id = req.params.id;
   pool.query(
-    "SELECT * FROM tb_siswa WHERE noinduk = $1",
+    "SELECT * FROM tb_grafana_alert WHERE noinduk = $1",
     [id],
     function (error, rows) {
       if (error) {
@@ -42,7 +42,7 @@ exports.addData = function (req, res) {
   var hobi = req.body.hobi;
 
   pool.query(
-    "INSERT INTO tb_siswa (noinduk,nama,alamat,hobi) VALUES($1,$2,$3,$4)",
+    "INSERT INTO tb_grafana_alert (noinduk,nama,alamat,hobi) VALUES($1,$2,$3,$4)",
     [noinduk, nama, alamat, hobi],
     function (error, rows, fields) {
       if (error) {
@@ -77,21 +77,20 @@ exports.updateData = function (req, res) {
 
 exports.webhook = function (req, res) {
   // var body = req.body;
-
-  //var x = JSON.stringify(req.body.dashboardId);
-  var dashboardId = req.body.dashboardId;
-  var title = JSON.stringify(req.body.title);
-  var message = JSON.stringify(req.body.message);
-  var ruleName = JSON.stringify(req.body.ruleName);
-  var evalMatches = JSON.stringify(req.body.evalMatches[0]["value"]);
   //var evalMatchesv = evalMatches.values;
   // var dashboardId = x.dashboardId;
   //var noinduk = req.body.dashboardID;
+  //var x = JSON.stringify(req.body.dashboardId);
+  var dashboardId = JSON.stringify(req.body.dashboardId);
+  var message = JSON.stringify(req.body.message);
+  var ruleName = JSON.stringify(req.body.ruleName);
+  var state = JSON.stringify(req.body.state);
+  var title = JSON.parse(JSON.stringify(req.body.title));
+  var evalMatches = JSON.stringify(req.body.evalMatches[0]["value"]);
+
   pool.query(
-    // "INSERT INTO tb_grafana_alert (noinduk,nama,alamat,hobi) VALUES($1,$2,$3,$4)",
-    // [x, title, message, evalMatches],
-    "INSERT INTO tb_grafana_alert (dashboardId,message,ruleName,state,title) VALUES($1,$2,$3,$4,$5)",
-    [dashboardId, message, message, evalMatches],
+    "INSERT INTO tb_grafana_alert (dashboardid,message,rulename,state,title) VALUES($1,$2,$3,$4,$5)",
+    [dashboardId, message, ruleName, state, title],
     function (error, rows, fields) {
       if (error) {
         console.log(error);
